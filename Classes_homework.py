@@ -27,7 +27,7 @@ class Student:
         if grade in acceptable_grade:
             if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
                 if course in lecturer.grades:
-                    lecturer.grades[course] += [grade]
+                    lecturer.grades[course].append(grade)
                 else:
                     lecturer.grades[course] = [grade]
             else:
@@ -79,7 +79,7 @@ class Reviewer(Mentor):
         if grade in acceptable_grade:
             if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
                 if course in student.grades:
-                    student.grades[course] += [grade]
+                    student.grades[course].append(grade)
                 else:
                     student.grades[course] = [grade]
             else:
@@ -89,23 +89,15 @@ class Reviewer(Mentor):
 
 
 def students_average_grade(student_list, course_name):
-    flat_list = []
     for student in student_list:
         if course_name in student.courses_attached or course_name in student.finished_courses:
-            for sublist in student.grades[course_name]:
-                for item in sublist:
-                    flat_list.append(item)
-    return sum(flat_list) / len(flat_list)
+            return sum(student.grades[course_name]) / len(student.grades[course_name])
 
 
 def lecturers_average_grade(lecturers_list, course_name):
-    flat_list = []
     for lecturer in lecturers_list:
         if course_name in lecturer.courses_attached:
-            for sublist in lecturer.grades[course_name]:
-                for item in sublist:
-                    flat_list.append(item)
-    return sum(flat_list) / len(flat_list)
+            return sum(lecturer.grades[course_name]) / len(lecturer.grades[course_name])
 
 
 very_cool_student = Student('Evgeniy', 'Ponasenkov', 'male')
