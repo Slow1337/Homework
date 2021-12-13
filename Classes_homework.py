@@ -10,9 +10,9 @@ class Student:
     def __str__(self):
         if self.grades:
             temp_list = []
-            for grade in self.grades.values():
-                for especially_that_one in grade:
-                    temp_list.append(especially_that_one)
+            for sublist in self.grades.values():
+                for item in sublist:
+                    temp_list.append(item)
             average_grade = sum(temp_list) / len(self.grades)
         else:
             average_grade = 0
@@ -91,10 +91,10 @@ class Reviewer(Mentor):
 def students_average_grade(student_list, course_name):
     flat_list = []
     for student in student_list:
-        if course_name in student.courses_in_progress:
-            flat_list.append(student.grades[course_name])
-        elif course_name in student.finished_courses:
-            flat_list.append(student.finished_courses[course_name])
+        if course_name in student.courses_attached or course_name in student.finished_courses:
+            for sublist in student.grades[course_name]:
+                for item in sublist:
+                    flat_list.append(item)
     return sum(flat_list) / len(flat_list)
 
 
@@ -102,7 +102,9 @@ def lecturers_average_grade(lecturers_list, course_name):
     flat_list = []
     for lecturer in lecturers_list:
         if course_name in lecturer.courses_attached:
-            flat_list.append(lecturer.grades[course_name])
+            for sublist in lecturer.grades[course_name]:
+                for item in sublist:
+                    flat_list.append(item)
     return sum(flat_list) / len(flat_list)
 
 
