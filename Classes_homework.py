@@ -27,7 +27,7 @@ class Student:
         if grade in acceptable_grade:
             if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
                 if course in lecturer.grades:
-                    lecturer.grades[course].append(grade)
+                    lecturer.grades[course] += [grade]
                 else:
                     lecturer.grades[course] = [grade]
             else:
@@ -79,7 +79,7 @@ class Reviewer(Mentor):
         if grade in acceptable_grade:
             if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
                 if course in student.grades:
-                    student.grades[course].append(grade)
+                    student.grades[course] += [grade]
                 else:
                     student.grades[course] = [grade]
             else:
