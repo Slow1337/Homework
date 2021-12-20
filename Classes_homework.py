@@ -8,6 +8,34 @@ class Student:
         self.grades = {}
 
     def __str__(self):
+        average_grade = self.average_grade_calc()
+        return f"""Имя: {self.name}
+Фамилия: {self.surname}
+Средняя оценка:{average_grade}
+Курсы в процессе изучения:{''.join(self.courses_in_progress)}
+Завершенные курсы: {self.finished_courses}"""
+
+    def __lt__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade < other_average_grade
+
+    def __gt__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade > other_average_grade
+
+    def __ge__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade >= other_average_grade
+
+    def __le__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade <= other_average_grade
+
+    def average_grade_calc(self):
         if self.grades:
             temp_list = []
             for sublist in self.grades.values():
@@ -16,11 +44,7 @@ class Student:
             average_grade = sum(temp_list) / len(self.grades)
         else:
             average_grade = 0
-        return f"""Имя: {self.name}
-Фамилия: {self.surname}
-Средняя оценка:{average_grade}
-Курсы в процессе изучения:{''.join(self.courses_in_progress)}
-Завершенные курсы: {self.finished_courses}"""
+        return average_grade
 
     def rate_lecturer(self, lecturer, course, grade):
         acceptable_grade = list(range(11))
@@ -53,6 +77,32 @@ class Lecturer(Mentor):
         self.grades = {}
 
     def __str__(self):
+        average_grade = self.average_grade_calc()
+        return f"""Имя:{self.name}
+Фамилия:{self.surname}
+Средняя оценка за лекции: {average_grade}"""
+
+    def __lt__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade < other_average_grade
+
+    def __gt__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade > other_average_grade
+
+    def __ge__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade >= other_average_grade
+
+    def __le__(self, other):
+        self_average_grade = self.average_grade_calc()
+        other_average_grade = other.average_grade_calc()
+        return self_average_grade <= other_average_grade
+
+    def average_grade_calc(self):
         if self.grades:
             temp_list = []
             for grade in self.grades.values():
@@ -61,9 +111,7 @@ class Lecturer(Mentor):
             average_grade = sum(temp_list) / len(self.grades)
         else:
             average_grade = 0
-        return f"""Имя:{self.name}
-Фамилия:{self.surname}
-Средняя оценка за лекции: {average_grade}"""
+        return average_grade
 
 
 class Reviewer(Mentor):
@@ -122,3 +170,7 @@ print(very_cool_lecturer)
 print(another_lecturer)
 print(very_cool_reviewer)
 print(another_reviewer)
+print(very_cool_student < another_student)
+print(very_cool_student > another_student)
+print(very_cool_lecturer > another_lecturer)
+print(very_cool_lecturer < another_lecturer)
